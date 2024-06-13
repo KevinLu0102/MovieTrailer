@@ -9,10 +9,25 @@ import Foundation
 
 protocol APIRequestProtocol {
     func upcoming(page: Int) -> URLRequest?
+    func detail(movieId: Int) -> URLRequest?
+    func video(movieId: Int) -> URLRequest?
 }
 
-fileprivate enum Path: String {
+fileprivate enum Path {
     case upcoming
+    case detail(Int)
+    case video(Int)
+    
+    var rawValue: String {
+        switch self {
+        case .upcoming:
+            return "upcoming"
+        case .detail(let movieId):
+            return "\(movieId)"
+        case .video(let movieId):
+            return "\(movieId)/videos"
+        }
+    }
 }
 
 struct APIRequest: APIRequestProtocol {
@@ -58,5 +73,13 @@ struct APIRequest: APIRequestProtocol {
             URLQueryItem(name: "page", value: "\(page)")
         ]
         return makeRequest(path: .upcoming, queryItems: queryItems)
+    }
+    
+    func detail(movieId: Int) -> URLRequest? {
+        return makeRequest(path: .detail(movieId))
+    }
+    
+    func video(movieId: Int) -> URLRequest? {
+        return makeRequest(path: .video(movieId))
     }
 }

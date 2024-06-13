@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct MovieListView: View {
     @StateObject private var viewModel = MovieListViewModel(networkService: NetworkService.shared, apiRequest: APIRequest())
 
     var body: some View {
@@ -18,7 +18,9 @@ struct ContentView: View {
                 Text("Error: \(error.localizedDescription)")
             } else {
                 List(viewModel.movies) { movie in
-                    MovieRow(movie: movie)
+                    NavigationLink(destination: MovieDetailView(movieId: movie.id)) {
+                        MovieRow(movie: movie)
+                    }
                 }
                 .navigationBarTitle("Upcoming")
             }
@@ -27,5 +29,5 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+    MovieListView()
 }

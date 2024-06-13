@@ -32,7 +32,6 @@ struct MovieRow: View {
                     .lineLimit(3)
             }
         }
-        .padding(.vertical, 8)
     }
 }
 #Preview {

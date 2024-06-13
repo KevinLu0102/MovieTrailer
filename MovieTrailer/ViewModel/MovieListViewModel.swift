@@ -27,7 +27,7 @@ class MovieListViewModel: ObservableObject {
         isLoading = true
         
         let request = apiRequest.upcoming(page: currentPage)
-        networkService.fetch(with: request) { [weak self] (result: Result<Upcoming, NetworkError>) in
+        networkService.fetch(with: request) { [weak self] (result: Result<UpcomingResponse, NetworkError>) in
             DispatchQueue.main.async{
                 switch result {
                 case .success(let success):
