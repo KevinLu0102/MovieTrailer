@@ -6,12 +6,10 @@
 //
 
 import SwiftUI
-import WebKit
 
 struct MovieDetailView: View {
     @StateObject private var viewModel = MovieDetailViewModel(networkService: NetworkService.shared, apiRequest: APIRequest())
     let movieId: Int
-    @State private var isPlaying = false
     
     var body: some View {
         VStack {
@@ -22,20 +20,24 @@ struct MovieDetailView: View {
             } else if let detail = viewModel.detail {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 10) {
-                        
-                        Text(detail.title)
-                            .font(.title)
-                            .fontWeight(.bold)
+                        if let videoID = viewModel.video?.key{
+                            VStack(spacing: 0) {
+                                YouTubePlayerView(videoID: videoID)
+                                    .frame(height: 200)
+                            }
+                        }
+                          
+                        Text("Overview")
+                            .font(.headline)
                         
                         Text(detail.overview ?? "")
                             .font(.body)
                     }
                     .padding()
                 }
+                .navigationBarTitle(detail.title)
             }
-            
         }
-        
         .onAppear {
             viewModel.fetchDetail(movieId: movieId)
             viewModel.fetchVideo(movieId: movieId)

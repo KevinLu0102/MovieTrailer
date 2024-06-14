@@ -9,7 +9,7 @@ import Foundation
 
 class MovieDetailViewModel: ObservableObject {
     @Published var detail: DetailResponse?
-    @Published var video: [Video]?
+    @Published var video: Video?
     @Published var isLoading = false
     @Published var error: Error?
     
@@ -46,7 +46,11 @@ class MovieDetailViewModel: ObservableObject {
             DispatchQueue.main.async {
                 switch result {
                 case .success(let success):
-                    self?.video = success.results
+                    if let officialTrailer = success.results.first(where: { $0.isOfficialTrailer }){
+                        self?.video = officialTrailer
+                    }else{
+                        self?.video = success.results.first(where: { $0.videoType == .trailer })
+                    }
                 case .failure(let error):
                     self?.error = error
                 }

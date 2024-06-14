@@ -19,7 +19,7 @@ struct Video: Codable, Identifiable {
     let key: String
     let site: String
     let size: Int
-    let type: String
+    private let type: String
     let official: Bool
     let publishedAt: String
     let id: String
@@ -31,4 +31,26 @@ struct Video: Codable, Identifiable {
         case publishedAt = "published_at"
         case id
     }
+    
+    enum VideoType{
+        case trailer
+        case teaser
+        case others
+    }
+    
+    var isOfficialTrailer: Bool{
+        return name.contains("Official") && videoType == .trailer
+    }
+    
+    var videoType: VideoType {
+        switch type {
+        case "Trailer":
+            return .trailer
+        case "Teaser":
+            return .teaser
+        default:
+            return .others
+        }
+    }
+    
 }
