@@ -10,6 +10,7 @@ import SwiftUI
 struct MovieDetailView: View {
     @StateObject private var viewModel = MovieDetailViewModel(networkService: NetworkService.shared, apiRequest: APIRequest())
     let movieId: Int
+    let title: String
     
     var body: some View {
         ScrollView{
@@ -33,8 +34,8 @@ struct MovieDetailView: View {
                     }
                 }
             }
-            
         }
+        .navigationTitle(title)
         .onAppear {
             viewModel.fetchVideo(movieId: movieId)
             viewModel.fetchDetail(movieId: movieId)
@@ -43,5 +44,5 @@ struct MovieDetailView: View {
 }
 
 #Preview {
-    MovieDetailView(movieId: 1022789)
+    MovieDetailView(movieId: 1022789, title: "Inside Out 2")
 }

@@ -16,7 +16,7 @@ struct MovieListView: View {
                 ProgressView()
             }else if let movies = viewModel.movies {
                 List(movies) { movie in
-                    NavigationLink(destination: MovieDetailView(movieId: movie.id)) {
+                    NavigationLink(destination: MovieDetailView(movieId: movie.id, title: movie.title)) {
                         MovieRow(movie: movie)
                     }
                 }
