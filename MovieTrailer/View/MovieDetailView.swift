@@ -12,35 +12,32 @@ struct MovieDetailView: View {
     let movieId: Int
     
     var body: some View {
-        VStack {
-            if viewModel.isLoading {
+        ScrollView{
+            if viewModel.isLoadingDetail || viewModel.isLoadingVideo {
                 ProgressView()
-            } else if let error = viewModel.error {
-                Text("Error: \(error.localizedDescription)")
-            } else if let detail = viewModel.detail {
-                ScrollView {
-                    VStack(alignment: .leading, spacing: 10) {
-                        if let videoID = viewModel.video?.key{
-                            VStack(spacing: 0) {
-                                YouTubePlayerView(videoID: videoID)
-                                    .frame(height: 200)
-                            }
-                        }
-                          
+            } else {
+                if let videoID = viewModel.video?.key{
+                    YouTubePlayerView(videoID: videoID)
+                        .frame(height: 250)
+                }
+                
+                if let overview = viewModel.detail?.overview{
+                    VStack(alignment: .leading){
                         Text("Overview")
                             .font(.headline)
+                            .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10))
                         
-                        Text(detail.overview ?? "")
+                        Text(overview)
                             .font(.body)
+                            .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10))
                     }
-                    .padding()
                 }
-                .navigationBarTitle(detail.title)
             }
+            
         }
         .onAppear {
-            viewModel.fetchDetail(movieId: movieId)
             viewModel.fetchVideo(movieId: movieId)
+            viewModel.fetchDetail(movieId: movieId)
         }
     }
 }

@@ -6,40 +6,44 @@
 //
 
 import Foundation
+import Combine
 
 protocol NetworkProtocol {
-    func fetch<T: Decodable>(with request: URLRequest?, completion: @escaping (Result<T, NetworkError>) -> Void)
+    func fetch<T: Decodable>(with request: URLRequest?) -> AnyPublisher<T, NetworkError>
 }
 
 class NetworkService: NetworkProtocol {
-
+    
     static let shared = NetworkService()
     
     private init() {}
     
-    func fetch<T>(with request: URLRequest?, completion: @escaping (Result<T, NetworkError>) -> Void) where T : Decodable {
+    func fetch<T>(with request: URLRequest?) -> AnyPublisher<T, NetworkError> where T : Decodable {
         
         guard let request = request else {
-            return completion(.failure(.requestNilError))
+            return Fail(error: NetworkError.requestNilError)
+                .eraseToAnyPublisher()
         }
         
-        URLSession.shared.dataTask(with: request) { (data, response, error) in
-            if let error = error {
-                completion(.failure(.requestError(error)))
-                return
+        return URLSession.shared.dataTaskPublisher(for: request)
+            .tryMap { (data, response) -> Data in
+                guard let httpResponse = response as? HTTPURLResponse else {
+                    throw NetworkError.responseHttpError
+                }
+                
+                guard httpResponse.statusCode == 200 else {
+                    throw NetworkError.responseError(httpResponse.statusCode)
+                }
+                return data
             }
-            
-            guard let data = data else {
-                completion(.failure(.dataError))
-                return
+            .decode(type: T.self, decoder: JSONDecoder())
+            .mapError { error -> NetworkError in
+                if let decodingError = error as? DecodingError {
+                    return NetworkError.decodingError(decodingError)
+                } else {
+                    return NetworkError.unknownError(error)
+                }
             }
-            
-            do {
-                let decodedData = try JSONDecoder().decode(T.self, from: data)
-                completion(.success(decodedData))
-            } catch {
-                completion(.failure(.unknownError(error)))
-            }
-        }.resume()
+            .eraseToAnyPublisher()
     }
 }

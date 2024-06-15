@@ -6,15 +6,17 @@
 //
 
 import Foundation
+import Combine
 
 class MovieDetailViewModel: ObservableObject {
     @Published var detail: DetailResponse?
     @Published var video: Video?
-    @Published var isLoading = false
-    @Published var error: Error?
+    @Published var isLoadingDetail = false
+    @Published var isLoadingVideo = false
     
     private let networkService: NetworkProtocol
     private let apiRequest: APIRequestProtocol
+    private var cancellables = Set<AnyCancellable>()
     
     init(networkService: NetworkProtocol, apiRequest: APIRequestProtocol) {
         self.networkService = networkService
@@ -22,40 +24,32 @@ class MovieDetailViewModel: ObservableObject {
     }
     
     func fetchDetail(movieId: Int) {
-        isLoading = true
-        
+        isLoadingDetail = true
         let request = apiRequest.detail(movieId: movieId)
-        networkService.fetch(with: request) { [weak self] (result: Result<DetailResponse, NetworkError>) in
-            DispatchQueue.main.async {
-                switch result {
-                case .success(let success):
-                    self?.detail = success
-                case .failure(let error):
-                    self?.error = error
-                }
-                self?.isLoading = false
+        networkService.fetch(with: request)
+            .receive(on: DispatchQueue.main)
+            .sink { completion in
+                self.isLoadingDetail = false
+            } receiveValue: { [weak self] (response: DetailResponse) in
+                self?.detail = response
             }
-        }
+            .store(in: &cancellables)
     }
     
     func fetchVideo(movieId: Int) {
-        isLoading = true
-        
+        isLoadingVideo = true
         let request = apiRequest.video(movieId: movieId)
-        networkService.fetch(with: request) { [weak self] (result: Result<VideoResponse, NetworkError>) in
-            DispatchQueue.main.async {
-                switch result {
-                case .success(let success):
-                    if let officialTrailer = success.results.first(where: { $0.isOfficialTrailer }){
-                        self?.video = officialTrailer
-                    }else{
-                        self?.video = success.results.first(where: { $0.videoType == .trailer })
-                    }
-                case .failure(let error):
-                    self?.error = error
+        networkService.fetch(with: request)
+            .receive(on: DispatchQueue.main)
+            .sink { completion in
+                self.isLoadingVideo = false
+            } receiveValue: { [weak self] (response: VideoResponse) in
+                if let officialTrailer = response.results.first(where: { $0.isOfficialTrailer }) {
+                    self?.video = officialTrailer
+                } else {
+                    self?.video = response.results.first(where: { $0.videoType == .trailer })
                 }
-                self?.isLoading = false
             }
-        }
+            .store(in: &cancellables)
     }
 }

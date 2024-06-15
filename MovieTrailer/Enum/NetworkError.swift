@@ -15,6 +15,7 @@ enum NetworkError: Error {
     case dataError
     case decodingError(DecodingError)
     case responseError(Int)
+    case responseHttpError
     case unknownError(Error)
     
     var localizedDescription: String {
@@ -42,6 +43,8 @@ enum NetworkError: Error {
             @unknown default:
                 return "Unknown decoding error: \(decodingError)"
             }
+        case .responseHttpError:
+            return "Response is not as HTTPURLResponse"
         case .responseError(let statusCode):
             return "Response error with status code: \(statusCode)"
         case .unknownError(let error):

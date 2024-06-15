@@ -6,16 +6,16 @@
 //
 
 import Foundation
-import SwiftUI
+import Combine
 
 class MovieListViewModel: ObservableObject {
-    @Published var movies: [Movie] = []
+    @Published var movies: [Movie]?
     @Published var isLoading: Bool = false
-    @Published var error: Error?
     var currentPage: Int = 1
     
     private let networkService: NetworkProtocol
     private let apiRequest: APIRequestProtocol
+    private var cancellables = Set<AnyCancellable>()
     
     init(networkService: NetworkProtocol, apiRequest: APIRequestProtocol) {
         self.networkService = networkService
@@ -27,17 +27,15 @@ class MovieListViewModel: ObservableObject {
         isLoading = true
         
         let request = apiRequest.upcoming(page: currentPage)
-        networkService.fetch(with: request) { [weak self] (result: Result<UpcomingResponse, NetworkError>) in
-            DispatchQueue.main.async{
-                switch result {
-                case .success(let success):
-                    self?.movies = success.results
-                    self?.currentPage += 1
-                case .failure(let error):
-                    self?.error = error
-                }
+        networkService.fetch(with: request)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] completion in
                 self?.isLoading = false
+                
+            } receiveValue: { [weak self] (response: UpcomingResponse) in
+                self?.movies = response.results
+                self?.currentPage += 1
             }
-        }
+            .store(in: &cancellables)
     }
 }

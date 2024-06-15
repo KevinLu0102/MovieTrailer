@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct MovieRow: View {
     let movie: Movie
@@ -13,13 +14,14 @@ struct MovieRow: View {
     var body: some View {
         HStack(alignment: .center) {
             if let backdropURL = movie.backdropURL {
-                AsyncImage(url: backdropURL) { image in
+                WebImage(url: backdropURL) { image in
                     image.resizable()
-                         .aspectRatio(contentMode: .fill)
                 } placeholder: {
-                    ProgressView()
+                    Rectangle().foregroundColor(.white)
                 }
-                .frame(width: 120, height: 80)
+                .indicator(.activity)
+                .transition(.fade(duration: 0.5))
+                .frame(width: 120, height: 80, alignment: .center)
                 .cornerRadius(8)
             }
 

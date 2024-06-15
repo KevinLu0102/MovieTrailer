@@ -14,10 +14,8 @@ struct MovieListView: View {
         NavigationView {
             if viewModel.isLoading {
                 ProgressView()
-            } else if let error = viewModel.error {
-                Text("Error: \(error.localizedDescription)")
-            } else {
-                List(viewModel.movies) { movie in
+            }else if let movies = viewModel.movies {
+                List(movies) { movie in
                     NavigationLink(destination: MovieDetailView(movieId: movie.id)) {
                         MovieRow(movie: movie)
                     }
