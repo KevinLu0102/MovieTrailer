@@ -9,36 +9,38 @@ import SwiftUI
 
 struct MovieDetailView: View {
     @StateObject private var viewModel = MovieDetailViewModel(networkService: NetworkService.shared, apiRequest: APIRequest())
+    @State private var showInfoView = false
     let movieId: Int
     let title: String
     
     var body: some View {
-        ScrollView{
-            if viewModel.isLoadingDetail || viewModel.isLoadingVideo {
-                ProgressView()
-            } else {
-                if let videoID = viewModel.video?.key{
-                    YouTubePlayerView(videoID: videoID)
-                        .frame(height: 250)
-                }
-                
-                if let overview = viewModel.detail?.overview{
-                    VStack(alignment: .leading){
-                        Text("Overview")
-                            .font(.headline)
-                            .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10))
-                        
-                        Text(overview)
-                            .font(.body)
-                            .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10))
+        ZStack {
+            ScrollView{
+                if viewModel.isLoadingDetail || viewModel.isLoadingVideo {
+                    ProgressView()
+                } else {
+                    if let videoID = viewModel.video?.key{
+                        YouTubePlayerView(videoID: videoID)
+                            .frame(height: 250)
                     }
+                    
+                    if let overview = viewModel.detail?.overview,
+                       let popularity = viewModel.detail?.popularity,
+                       let releaseDate = viewModel.detail?.releaseDate,
+                       let runtime = viewModel.detail?.runtime {
+                        MovieOverviewView(overview: overview, popularity: popularity, releaseDate: releaseDate,
+                                          runtime: runtime, showInfoView: $showInfoView)
+                    }
+                    
                 }
             }
-        }
-        .navigationTitle(title)
-        .onAppear {
-            viewModel.fetchVideo(movieId: movieId)
-            viewModel.fetchDetail(movieId: movieId)
+            .navigationTitle(title)
+            .onAppear {
+                viewModel.fetchVideo(movieId: movieId)
+                viewModel.fetchDetail(movieId: movieId)
+                
+            }
+            if showInfoView{ popularityInfoView(isShowed: $showInfoView) }
         }
     }
 }
