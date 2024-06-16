@@ -32,12 +32,22 @@ struct MovieDetailView: View {
                                           runtime: runtime, showInfoView: $showInfoView)
                     }
                     
+                    if let posters = viewModel.posters{
+                        VStack(alignment: .leading) {
+                            Text("Poster")
+                                .font(.title2)
+                                .padding(.horizontal)
+                            
+                            PosterView(posters: posters)
+                        }
+                    }
                 }
             }
             .navigationTitle(title)
             .onAppear {
                 viewModel.fetchVideo(movieId: movieId)
                 viewModel.fetchDetail(movieId: movieId)
+                viewModel.fetchImages(movieId: movieId)
                 
             }
             if showInfoView{ popularityInfoView(isShowed: $showInfoView) }

@@ -18,7 +18,7 @@ struct MovieOverviewView: View {
         VStack(alignment: .leading, spacing: 10) {
             VStack(alignment: .leading) {
                 Text("Overview")
-                    .font(.headline)
+                    .font(.title2)
                     .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10))
                     
                 Text(overview)

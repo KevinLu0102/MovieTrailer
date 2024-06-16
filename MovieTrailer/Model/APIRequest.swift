@@ -11,12 +11,14 @@ protocol APIRequestProtocol {
     func upcoming(page: Int) -> URLRequest?
     func detail(movieId: Int) -> URLRequest?
     func video(movieId: Int) -> URLRequest?
+    func images(movieId: Int) -> URLRequest?
 }
 
 fileprivate enum Path {
     case upcoming
     case detail(Int)
     case video(Int)
+    case images(Int)
     
     var rawValue: String {
         switch self {
@@ -26,6 +28,8 @@ fileprivate enum Path {
             return "\(movieId)"
         case .video(let movieId):
             return "\(movieId)/videos"
+        case .images(let movieId):
+            return "\(movieId)/images"
         }
     }
 }
@@ -81,5 +85,9 @@ struct APIRequest: APIRequestProtocol {
     
     func video(movieId: Int) -> URLRequest? {
         return makeRequest(path: .video(movieId))
+    }
+    
+    func images(movieId: Int) -> URLRequest? {
+        return makeRequest(path: .images(movieId))
     }
 }

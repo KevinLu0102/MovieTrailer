@@ -16,7 +16,7 @@ struct RequestConfig {
     static let `default` = RequestConfig(
         baseURL: "https://api.themoviedb.org/3/movie/",
         apiKey: "aefd8f383ce4794e8c98eb8132c161ca",
-        language: "en-US",
+        language: "en",
         method: "GET"
     )
 }

@@ -11,6 +11,8 @@ import Combine
 class MovieDetailViewModel: ObservableObject {
     @Published var detail: DetailResponse?
     @Published var video: Video?
+    @Published var posters: [Poster]?
+    
     @Published var isLoadingDetail = false
     @Published var isLoadingVideo = false
     
@@ -49,6 +51,19 @@ class MovieDetailViewModel: ObservableObject {
                 } else {
                     self?.video = response.results.first(where: { $0.videoType == .trailer })
                 }
+            }
+            .store(in: &cancellables)
+    }
+    
+    func fetchImages(movieId: Int) {
+        let request = apiRequest.images(movieId: movieId)
+        networkService.fetch(with: request)
+            .receive(on: DispatchQueue.main)
+            .sink { completion in
+                
+            } receiveValue: { [weak self] (response: ImagesResponse) in
+                
+                self?.posters = response.posters
             }
             .store(in: &cancellables)
     }
