@@ -1,5 +1,5 @@
 //
-//  MovieOverviewView.swift
+//  OverviewView.swift
 //  MovieTrailer
 //
 //  Created by Kevin Lu on 2024/6/16.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MovieOverviewView: View {
+struct OverviewView: View {
     let overview: String
     let popularity: Double
     let releaseDate: String
@@ -16,15 +16,9 @@ struct MovieOverviewView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            VStack(alignment: .leading) {
-                Text("Overview")
-                    .font(.title2)
-                    .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10))
-                    
-                Text(overview)
-                    .font(.body)
-                    .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10))
-            }
+            Text(overview)
+                .font(.body)
+                .padding(.leading)
             
             HStack(spacing: 5) {
                 VStack(alignment: .center) {
@@ -71,6 +65,6 @@ struct MovieOverviewView: View {
 }
 
 #Preview {
-    MovieOverviewView(overview: "This is  overview", popularity: 3000, releaseDate: "yyyy-MM-dd",
+    OverviewView(overview: "This is  overview", popularity: 3000, releaseDate: "yyyy-MM-dd",
                       runtime: 300, showInfoView: .constant(true))
 }

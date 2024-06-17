@@ -13,13 +13,7 @@ struct YouTubePlayerView: UIViewRepresentable {
     
     func makeUIView(context: Context) -> YTPlayerView {
         let playerView = YTPlayerView()
-        let playerVars = [
-                    "controls": "0",
-                    "showinfo": "0",
-                    "modestbranding": "1",
-                    "rel": "0"
-        ]
-        
+        let playerVars = ["controls": "0", "rel": "0"]
         playerView.load(withVideoId: videoID, playerVars: playerVars)
         playerView.delegate = context.coordinator
         return playerView

@@ -1,5 +1,5 @@
 //
-//  MovieDetailView.swift
+//  MovieIntroView.swift
 //  MovieTrailer
 //
 //  Created by Kevin Lu on 2024/6/12.
@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-struct MovieDetailView: View {
-    @StateObject private var viewModel = MovieDetailViewModel(networkService: NetworkService.shared, apiRequest: APIRequest())
+struct MovieIntroView: View {
+    @StateObject private var viewModel = MovieIntroViewModel(networkService: NetworkService.shared, apiRequest: APIRequest())
     @State private var showInfoView = false
     let movieId: Int
     let title: String
@@ -28,8 +28,14 @@ struct MovieDetailView: View {
                        let popularity = viewModel.detail?.popularity,
                        let releaseDate = viewModel.detail?.releaseDate,
                        let runtime = viewModel.detail?.runtime {
-                        MovieOverviewView(overview: overview, popularity: popularity, releaseDate: releaseDate,
-                                          runtime: runtime, showInfoView: $showInfoView)
+                        VStack(alignment: .leading) {
+                            Text("Overview")
+                                .font(.title2)
+                                .padding(.horizontal)
+                            OverviewView(overview: overview, popularity: popularity,
+                                              releaseDate: releaseDate,
+                                              runtime: runtime, showInfoView: $showInfoView)
+                        }
                     }
                     
                     if let posters = viewModel.posters{
@@ -41,6 +47,8 @@ struct MovieDetailView: View {
                             PosterView(posters: posters)
                         }
                     }
+                    
+                    
                 }
             }
             .navigationTitle(title)
@@ -56,5 +64,5 @@ struct MovieDetailView: View {
 }
 
 #Preview {
-    MovieDetailView(movieId: 1022789, title: "Inside Out 2")
+    MovieIntroView(movieId: 1022789, title: "Inside Out 2")
 }

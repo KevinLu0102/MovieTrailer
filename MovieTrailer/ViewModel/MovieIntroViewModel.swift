@@ -1,5 +1,5 @@
 //
-//  MovieDetailViewModel.swift
+//  MovieIntroViewModel.swift
 //  MovieTrailer
 //
 //  Created by Kevin Lu on 2024/6/12.
@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-class MovieDetailViewModel: ObservableObject {
+class MovieIntroViewModel: ObservableObject {
     @Published var detail: DetailResponse?
     @Published var video: Video?
     @Published var posters: [Poster]?
