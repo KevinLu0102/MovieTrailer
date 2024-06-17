@@ -32,6 +32,7 @@ struct MovieIntroView: View {
                             Text("Overview")
                                 .font(.title2)
                                 .padding(.horizontal)
+                            
                             OverviewView(overview: overview, popularity: popularity,
                                               releaseDate: releaseDate,
                                               runtime: runtime, showInfoView: $showInfoView)
@@ -48,7 +49,15 @@ struct MovieIntroView: View {
                         }
                     }
                     
-                    
+                    if let similar = viewModel.similar{
+                        VStack(alignment: .leading) {
+                            Text("Similar")
+                                .font(.title2)
+                                .padding(.horizontal)
+                            
+                            SimilarView(similar: similar)
+                        }
+                    }
                 }
             }
             .navigationTitle(title)
@@ -56,6 +65,7 @@ struct MovieIntroView: View {
                 viewModel.fetchVideo(movieId: movieId)
                 viewModel.fetchDetail(movieId: movieId)
                 viewModel.fetchImages(movieId: movieId)
+                viewModel.fetchSimilar(movieId: movieId)
                 
             }
             if showInfoView{ popularityInfoView(isShowed: $showInfoView) }

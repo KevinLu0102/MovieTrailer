@@ -34,13 +34,13 @@ struct PosterView: View {
 }
 
 #Preview {
-    PosterView(posters: [Poster(aspectRatio: 0.667, height: 3000, iso639_1: "en",
+    PosterView(posters: [Poster(aspectRatio: 0.667, height: 3000, iso6391: "en",
                                 filePath: "/vpnVM9B6NMmQpWeZvzLvDESb2QY.jpg",
                                 voteAverage: 5.456, voteCount: 11, width: 2000),
-                         Poster(aspectRatio: 0.667, height: 3000, iso639_1: "en",
+                         Poster(aspectRatio: 0.667, height: 3000, iso6391: "en",
                                 filePath: "/vpnVM9B6NMmQpWeZvzLvDESb2QY.jpg",
                                 voteAverage: 5.456, voteCount: 11, width: 2000),
-                         Poster(aspectRatio: 0.667, height: 3000, iso639_1: "en",
+                         Poster(aspectRatio: 0.667, height: 3000, iso6391: "en",
                                 filePath: "/vpnVM9B6NMmQpWeZvzLvDESb2QY.jpg",
                                 voteAverage: 5.456, voteCount: 11, width: 2000)])
 }

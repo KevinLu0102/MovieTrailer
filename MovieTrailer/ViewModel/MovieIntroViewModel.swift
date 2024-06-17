@@ -12,7 +12,7 @@ class MovieIntroViewModel: ObservableObject {
     @Published var detail: DetailResponse?
     @Published var video: Video?
     @Published var posters: [Poster]?
-    
+    @Published var similar: SimilarResponse?
     @Published var isLoadingDetail = false
     @Published var isLoadingVideo = false
     
@@ -64,6 +64,18 @@ class MovieIntroViewModel: ObservableObject {
             } receiveValue: { [weak self] (response: ImagesResponse) in
                 
                 self?.posters = response.posters
+            }
+            .store(in: &cancellables)
+    }
+    
+    func fetchSimilar(movieId: Int) {
+        let request = apiRequest.similar(movieId: movieId)
+        networkService.fetch(with: request)
+            .receive(on: DispatchQueue.main)
+            .sink { completion in
+                
+            } receiveValue: { [weak self] (response: SimilarResponse) in
+                self?.similar = response
             }
             .store(in: &cancellables)
     }

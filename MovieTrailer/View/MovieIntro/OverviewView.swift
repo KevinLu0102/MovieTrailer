@@ -17,8 +17,8 @@ struct OverviewView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             Text(overview)
-                .font(.body)
-                .padding(.leading)
+                .font(.footnote)
+                .padding(.horizontal)
             
             HStack(spacing: 5) {
                 VStack(alignment: .center) {

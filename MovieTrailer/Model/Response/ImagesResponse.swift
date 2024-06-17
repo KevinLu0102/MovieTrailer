@@ -17,7 +17,7 @@ struct ImagesResponse: Codable {
 struct Backdrop: Codable {
     let aspectRatio: Double
     let height: Int
-    let iso639_1: String?
+    let iso6391: String?
     let filePath: String
     let voteAverage: Double
     let voteCount: Int
@@ -26,7 +26,7 @@ struct Backdrop: Codable {
     enum CodingKeys: String, CodingKey {
         case aspectRatio = "aspect_ratio"
         case height
-        case iso639_1 = "iso_639_1"
+        case iso6391 = "iso_639_1"
         case filePath = "file_path"
         case voteAverage = "vote_average"
         case voteCount = "vote_count"
@@ -37,7 +37,7 @@ struct Backdrop: Codable {
 struct Logo: Codable {
     let aspectRatio: Double
     let height: Int
-    let iso639_1: String?
+    let iso6391: String?
     let filePath: String
     let voteAverage: Double
     let voteCount: Int
@@ -46,7 +46,7 @@ struct Logo: Codable {
     enum CodingKeys: String, CodingKey {
         case aspectRatio = "aspect_ratio"
         case height
-        case iso639_1 = "iso_639_1"
+        case iso6391 = "iso_639_1"
         case filePath = "file_path"
         case voteAverage = "vote_average"
         case voteCount = "vote_count"
@@ -57,7 +57,7 @@ struct Logo: Codable {
 struct Poster: Codable {
     let aspectRatio: Double
     let height: Int
-    let iso639_1: String?
+    let iso6391: String?
     let filePath: String
     let voteAverage: Double
     let voteCount: Int
@@ -70,7 +70,7 @@ struct Poster: Codable {
     enum CodingKeys: String, CodingKey {
         case aspectRatio = "aspect_ratio"
         case height
-        case iso639_1 = "iso_639_1"
+        case iso6391 = "iso_639_1"
         case filePath = "file_path"
         case voteAverage = "vote_average"
         case voteCount = "vote_count"
