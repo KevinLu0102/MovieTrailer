@@ -38,7 +38,9 @@ class NetworkService: NetworkProtocol {
             }
             .decode(type: T.self, decoder: JSONDecoder())
             .mapError { error -> NetworkError in
-                if let decodingError = error as? DecodingError {
+                if let networkError = error as? NetworkError {
+                    return networkError
+                } else if let decodingError = error as? DecodingError {
                     return NetworkError.decodingError(decodingError)
                 } else {
                     return NetworkError.unknownError(error)
