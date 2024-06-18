@@ -11,22 +11,22 @@ import Combine
 class MovieListViewModel: ObservableObject {
     @Published var movies: [Movie]?
     @Published var isLoading: Bool = false
-    var currentPage: Int = 1
+    private var currentPage: Int = 1
     
     private let networkService: NetworkProtocol
-    private let apiRequest: APIRequestProtocol
+    private let movieRequest: MovieRequestProtocol
     private var cancellables = Set<AnyCancellable>()
     
-    init(networkService: NetworkProtocol, apiRequest: APIRequestProtocol) {
+    init(networkService: NetworkProtocol, movieRequest: MovieRequestProtocol) {
         self.networkService = networkService
-        self.apiRequest = apiRequest
+        self.movieRequest = movieRequest
         fetchUpcomingMovies()
     }
     
     func fetchUpcomingMovies() {
         isLoading = true
         
-        let request = apiRequest.upcoming(page: currentPage)
+        let request = movieRequest.createUpcoming(page: currentPage)
         networkService.fetch(with: request)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] completion in

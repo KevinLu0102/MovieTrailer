@@ -38,10 +38,6 @@ struct Video: Codable, Identifiable {
         case others
     }
     
-    var isOfficialTrailer: Bool{
-        return name.contains("Official") && videoType == .trailer
-    }
-    
     var videoType: VideoType {
         switch type {
         case "Trailer":

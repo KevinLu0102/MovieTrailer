@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MovieListView: View {
-    @StateObject private var viewModel = MovieListViewModel(networkService: NetworkService.shared, apiRequest: APIRequest())
+    @StateObject private var viewModel = MovieListViewModel(networkService: NetworkService.shared, movieRequest: MovieRequestFactory())
 
     var body: some View {
         NavigationView {

@@ -1,11 +1,18 @@
 //
-//  NetworkError.swift
+//  Network.swift
 //  MovieTrailer
 //
 //  Created by Kevin Lu on 2024/6/12.
 //
 
 import Foundation
+
+enum HTTPMethod: String {
+    case get = "GET"
+    case post = "POST"
+    case put = "PUT"
+    case delete = "DELETE"
+}
 
 enum NetworkError: Error {
     case invalidError
