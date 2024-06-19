@@ -16,6 +16,10 @@ struct MovieIntroView: View {
     var body: some View {
         ZStack {
             ScrollView{
+                if viewModel.isLoading{
+                    ProgressView()
+                }
+                
                 if let videoID = viewModel.video?.key{
                     YouTubePlayerView(videoID: videoID)
                         .frame(height: 250)
@@ -58,16 +62,15 @@ struct MovieIntroView: View {
                         }
                     }
                 }
+                
+                if showInfoView{ 
+                    popularityInfoView(isShowed: $showInfoView)
+                }
             }
             .navigationTitle(title)
             .onAppear {
-                viewModel.fetchVideo(movieId: movieId)
-                viewModel.fetchDetail(movieId: movieId)
-                viewModel.fetchImages(movieId: movieId)
-                viewModel.fetchSimilar(movieId: movieId)
-                
+                viewModel.fetchMovieData(movieId: movieId)
             }
-            if showInfoView{ popularityInfoView(isShowed: $showInfoView) }
         }
     }
 

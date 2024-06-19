@@ -12,7 +12,7 @@ struct VideoResponse: Codable {
     let results: [Video]
 }
 
-struct Video: Codable, Identifiable {
+struct Video: Codable {
     let iso6391: String
     let iso31661: String
     let name: String
@@ -31,22 +31,4 @@ struct Video: Codable, Identifiable {
         case publishedAt = "published_at"
         case id
     }
-    
-    enum VideoType{
-        case trailer
-        case teaser
-        case others
-    }
-    
-    var videoType: VideoType {
-        switch type {
-        case "Trailer":
-            return .trailer
-        case "Teaser":
-            return .teaser
-        default:
-            return .others
-        }
-    }
-    
 }

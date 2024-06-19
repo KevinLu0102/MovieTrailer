@@ -23,6 +23,9 @@ struct MovieListView: View {
                 .navigationBarTitle("Upcoming")
             }
         }
+        .onAppear {
+            viewModel.fetchUpcomingMovies()
+        }
     }
 }
 

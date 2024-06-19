@@ -20,7 +20,6 @@ class MovieListViewModel: ObservableObject {
     init(networkService: NetworkProtocol, movieRequest: MovieRequestProtocol) {
         self.networkService = networkService
         self.movieRequest = movieRequest
-        fetchUpcomingMovies()
     }
     
     func fetchUpcomingMovies() {
@@ -29,7 +28,7 @@ class MovieListViewModel: ObservableObject {
         let request = movieRequest.createUpcoming(page: currentPage)
         networkService.fetch(with: request)
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] completion in
+            .sink { [weak self] _ in
                 self?.isLoading = false
                 
             } receiveValue: { [weak self] (response: UpcomingResponse) in

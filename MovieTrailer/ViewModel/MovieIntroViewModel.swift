@@ -13,6 +13,7 @@ class MovieIntroViewModel: ObservableObject {
     @Published var video: Video?
     @Published var posters: [Poster]?
     @Published var similar: SimilarResponse?
+    @Published var isLoading: Bool = false
     
     private let networkService: NetworkProtocol
     private let apiRequest: MovieRequestProtocol
@@ -23,57 +24,68 @@ class MovieIntroViewModel: ObservableObject {
         self.apiRequest = apiRequest
     }
     
-    func fetchDetail(movieId: Int) {
+    private func fetchDetail(movieId: Int) -> AnyPublisher<DetailResponse?, Never> {
         let request = apiRequest.createDetail(movieId: movieId)
-        networkService.fetch(with: request)
-            .receive(on: DispatchQueue.main)
-            .sink { completion in
-                
-            } receiveValue: { [weak self] (response: DetailResponse) in
-                self?.detail = response
+        return networkService.fetch(with: request)
+            .map { $0 }
+            .catch { error -> Just<DetailResponse?> in
+                print("Error fetching detail: \(error.localizedDescription)")
+                return Just(nil)
             }
-            .store(in: &cancellables)
+            .eraseToAnyPublisher()
     }
     
-    func fetchVideo(movieId: Int) {
+    private func fetchVideo(movieId: Int) -> AnyPublisher<VideoResponse?, Never> {
         let request = apiRequest.createVideo(movieId: movieId)
-        networkService.fetch(with: request)
-            .receive(on: DispatchQueue.main)
-            .sink { completion in
-                
-            } receiveValue: { [weak self] (response: VideoResponse) in
-                let isOfficialTrailer: (Video) -> Bool = { $0.name.contains("Official") && $0.videoType == .trailer }
-                
-                if let officialTrailer = response.results.first(where: isOfficialTrailer) {
-                    self?.video = officialTrailer
-                } else {
-                    self?.video = response.results.first(where: { $0.videoType == .trailer })
-                }
+        return networkService.fetch(with: request)
+            .map { $0 }
+            .catch { error -> Just<VideoResponse?> in
+                print("Error fetching video: \(error.localizedDescription)")
+                return Just(nil)
             }
-            .store(in: &cancellables)
+            .eraseToAnyPublisher()
     }
     
-    func fetchImages(movieId: Int) {
+    private func fetchImages(movieId: Int) -> AnyPublisher<ImagesResponse?, Never> {
         let request = apiRequest.createImages(movieId: movieId)
-        networkService.fetch(with: request)
-            .receive(on: DispatchQueue.main)
-            .sink { completion in
-                
-            } receiveValue: { [weak self] (response: ImagesResponse) in
-                self?.posters = response.posters
+        return networkService.fetch(with: request)
+            .map { $0 }
+            .catch { error -> Just<ImagesResponse?> in
+                print("Error fetching images: \(error.localizedDescription)")
+                return Just(nil)
             }
-            .store(in: &cancellables)
+            .eraseToAnyPublisher()
     }
     
-    func fetchSimilar(movieId: Int) {
+    private func fetchSimilar(movieId: Int) -> AnyPublisher<SimilarResponse?, Never> {
         let request = apiRequest.createSimilar(movieId: movieId)
-        networkService.fetch(with: request)
-            .receive(on: DispatchQueue.main)
-            .sink { completion in
-                
-            } receiveValue: { [weak self] (response: SimilarResponse) in
-                self?.similar = response
+        return networkService.fetch(with: request)
+            .map { $0 }
+            .catch { error -> Just<SimilarResponse?> in
+                print("Error fetching similar: \(error.localizedDescription)")
+                return Just(nil)
             }
-            .store(in: &cancellables)
+            .eraseToAnyPublisher()
+    }
+    
+    func fetchMovieData(movieId: Int) {
+        isLoading = true
+        
+        Publishers.CombineLatest4(
+            fetchDetail(movieId: movieId),
+            fetchVideo(movieId: movieId),
+            fetchImages(movieId: movieId),
+            fetchSimilar(movieId: movieId)
+        )
+        .receive(on: DispatchQueue.main)
+        .sink(receiveCompletion: { [weak self] _ in
+            self?.isLoading = false
+        }, receiveValue: { [weak self] (detailResponse, videoResponse, imagesResponse, similarResponse)  in
+            self?.detail = detailResponse
+            self?.video = videoResponse?.results.first(where: { $0.name == "Official Trailer"})
+            self?.posters = imagesResponse?.posters
+            self?.similar = similarResponse
+        })
+        .store(in: &cancellables)
     }
 }

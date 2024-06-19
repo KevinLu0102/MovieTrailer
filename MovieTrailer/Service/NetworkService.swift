@@ -31,7 +31,7 @@ class NetworkService: NetworkProtocol {
                     throw NetworkError.responseHttpError
                 }
                 
-                guard httpResponse.statusCode == 200 else {
+                guard (200...299).contains(httpResponse.statusCode) else {
                     throw NetworkError.responseError(httpResponse.statusCode)
                 }
                 return data
