@@ -23,20 +23,6 @@ struct Movie: Codable, Identifiable {
     let voteAverage: Double
     let voteCount: Int
     
-    var backdropURL: URL? {
-        guard let backdropPath = backdropPath else {
-            return nil
-        }
-        return URL(string: "https://image.tmdb.org/t/p/w500\(backdropPath)")
-    }
-    
-    var posterURL: URL? {
-        guard let posterPath = posterPath else {
-            return nil
-        }
-        return URL(string: "https://image.tmdb.org/t/p/w500\(posterPath)")
-    }
-    
     enum CodingKeys: String, CodingKey {
         case id, adult
         case backdropPath = "backdrop_path"
@@ -49,5 +35,21 @@ struct Movie: Codable, Identifiable {
         case title, video
         case voteAverage = "vote_average"
         case voteCount = "vote_count"
+    }
+}
+
+extension Movie{
+    var backdropURL: URL? {
+        guard let backdropPath = backdropPath else {
+            return nil
+        }
+        return URL(string: "https://image.tmdb.org/t/p/w500\(backdropPath)")
+    }
+    
+    var posterURL: URL? {
+        guard let posterPath = posterPath else {
+            return nil
+        }
+        return URL(string: "https://image.tmdb.org/t/p/w500\(posterPath)")
     }
 }

@@ -1,5 +1,5 @@
 //
-//  MovieIntroView.swift
+//  MovieIntroContentView.swift
 //  MovieTrailer
 //
 //  Created by Kevin Lu on 2024/6/12.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MovieIntroView: View {
+struct MovieIntroContentView: View {
     @StateObject private var viewModel = MovieIntroViewModel(networkService: NetworkService.shared, apiRequest: MovieRequestFactory())
     @State private var showInfoView = false
     let movieId: Int
@@ -75,5 +75,5 @@ struct MovieIntroView: View {
     }
 
 #Preview {
-    MovieIntroView(movieId: 1022789, title: "Inside Out 2")
+    MovieIntroContentView(movieId: 1022789, title: "Inside Out 2")
 }

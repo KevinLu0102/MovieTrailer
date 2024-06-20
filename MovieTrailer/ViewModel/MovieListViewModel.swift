@@ -9,9 +9,9 @@ import Foundation
 import Combine
 
 class MovieListViewModel: ObservableObject {
-    @Published var movies: [Movie]?
+    @Published var popularMovies: [Movie]?
+    @Published var upcomingMovies: [Movie]?
     @Published var isLoading: Bool = false
-    private var currentPage: Int = 1
     
     private let networkService: NetworkProtocol
     private let movieRequest: MovieRequestProtocol
@@ -22,19 +22,42 @@ class MovieListViewModel: ObservableObject {
         self.movieRequest = movieRequest
     }
     
-    func fetchUpcomingMovies() {
+    private func fetchUpcomingMovies() -> AnyPublisher<UpcomingResponse?, Never> {
+        let request = movieRequest.createUpcoming()
+        return networkService.fetch(with: request)
+            .map { $0 }
+            .catch { error -> Just<UpcomingResponse?> in
+                print("Error fetching upcoming: \(error.localizedDescription)")
+                return Just(nil)
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    private func fetchPopularMovies() -> AnyPublisher<PopularResponse?, Never>{
+        let request = movieRequest.createPopular()
+        return networkService.fetch(with: request)
+            .map { $0 }
+            .catch { error -> Just<PopularResponse?> in
+                print("Error fetching popular: \(error.localizedDescription)")
+                return Just(nil)
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    func fetchMovieList() {
         isLoading = true
         
-        let request = movieRequest.createUpcoming(page: currentPage)
-        networkService.fetch(with: request)
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
-                self?.isLoading = false
-                
-            } receiveValue: { [weak self] (response: UpcomingResponse) in
-                self?.movies = response.results
-                self?.currentPage += 1
-            }
-            .store(in: &cancellables)
+        Publishers.CombineLatest(
+            fetchPopularMovies(),
+            fetchUpcomingMovies()
+        )
+        .receive(on: DispatchQueue.main)
+        .sink(receiveCompletion: { [weak self] _ in
+            self?.isLoading = false
+        }, receiveValue: { [weak self] (popularResponse, upcomingResponse)  in
+            self?.popularMovies = popularResponse?.results
+            self?.upcomingMovies = upcomingResponse?.results
+        })
+        .store(in: &cancellables)
     }
 }
