@@ -38,6 +38,7 @@ struct SimilarView: View {
                                     .lineLimit(2)
                                     .bold()
                                     .padding(.all, 5)
+                                    .foregroundStyle(.black)
                             }
                         }
                         .buttonStyle(.plain)
