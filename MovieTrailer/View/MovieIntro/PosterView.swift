@@ -15,17 +15,9 @@ struct PosterView: View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 10) {
                 ForEach(0..<posters.count, id: \.self) { index in
-                    if let url = posters[index].filePathURL {
-                        WebImage(url: url) { image in
-                            image.resizable()
-                        } placeholder: {
-                            Rectangle().foregroundColor(.white)
-                        }
-                        .indicator(.activity)
-                        .transition(.fade(duration: 0.5))
-                        .frame(width: 150, height: 225, alignment: .center)
-                        .cornerRadius(8)
-                    }
+                    PosterItemView(imageURL: posters[index].filePathURL, title: nil)
+                        .frame(width: 150, height: 225)
+                        .padding(.bottom)
                 }
             }
             .padding(.leading)

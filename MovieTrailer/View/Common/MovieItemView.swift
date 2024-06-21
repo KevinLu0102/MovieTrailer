@@ -1,19 +1,19 @@
 //
-//  PopularRow.swift
+//  MovieItemView.swift
 //  MovieTrailer
 //
-//  Created by Kevin Lu on 2024/6/19.
+//  Created by Kevin Lu on 2024/6/11.
 //
 
 import SwiftUI
 import SDWebImageSwiftUI
 
-struct PopularRow: View {
+struct MovieItemView: View {
     let movie: Movie
-    
+
     var body: some View {
-        VStack(alignment: .center) {
-            if let backdropURL = movie.posterURL {
+        HStack(alignment: .center) {
+            if let backdropURL = movie.backdropURL {
                 WebImage(url: backdropURL) { image in
                     image.resizable()
                 } placeholder: {
@@ -21,21 +21,23 @@ struct PopularRow: View {
                 }
                 .indicator(.activity)
                 .transition(.fade(duration: 0.5))
+                .frame(width: 120, height: 80, alignment: .center)
                 .cornerRadius(8)
-                .scaledToFit()
-                .shadow(color: .black.opacity(0.5), radius: 10, x: 0, y: 5)
-
             }
 
-            Text(movie.title)
-                .font(.headline)
-                .lineLimit(1)
+            VStack(alignment: .leading, spacing: 8) {
+                Text(movie.title)
+                    .font(.headline)
+
+                Text(movie.overview)
+                    .font(.subheadline)
+                    .lineLimit(3)
+            }
         }
     }
 }
-
 #Preview {
-    PopularRow(movie: Movie(
+    MovieItemView(movie: Movie(
         id: 1022789,
         adult: false,
         backdropPath: "/uVu2fBc114un7F1GD76RBouWyBP.jpg",

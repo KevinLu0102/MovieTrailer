@@ -24,22 +24,8 @@ struct MovieListContentView: View {
                             .font(.largeTitle)
                             .bold()
                             .padding(.horizontal)
-                            
-                        ScrollView(.horizontal, showsIndicators: false) {
-                            HStack(spacing: 0) {
-                                ForEach(popularMovies.prefix(10)) { movie in
-                                    NavigationLink {
-                                        MovieIntroContentView(movieId: movie.id, title: movie.title)
-                                    } label: {
-                                        PopularRow(movie: movie)
-                                            .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height / 3)
-                                    }
-                                    .buttonStyle(.plain)
-                                }
-                            }
-                        }
-                        .padding(.vertical)
-                        .scrollTargetBehavior(.paging)
+                        
+                        PopularView(popularMovies: popularMovies)
                     }
                     
                     if let upcomingMovies = viewModel.upcomingMovies{
@@ -49,18 +35,7 @@ struct MovieListContentView: View {
                                 .bold()
                                 .padding(.horizontal)
                                 
-                            ForEach(upcomingMovies) { movie in
-                                NavigationLink {
-                                    MovieIntroContentView(movieId: movie.id, title: movie.title)
-                                } label: {
-                                    MovieRow(movie: movie)
-                                }
-                                .buttonStyle(.plain)
-                                .padding()
-                                    
-                                Divider()
-                                    .padding(.horizontal, 10)
-                            }
+                            UpcomingView(upcomingMovies: upcomingMovies)
                         }
 
                     }
