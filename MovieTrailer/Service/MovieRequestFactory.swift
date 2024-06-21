@@ -49,7 +49,8 @@ class MovieRequestFactory: MovieRequestProtocol {
     
     func createImages(movieId: Int) -> URLRequest? {
         let url = "\(baseURL)/\(movieId)/images"
-        return requestProducer.produceRequest(url: url, method: .get, key: apiKey, queryItems: nil)
+        let queryItems = [URLQueryItem(name: "include_image_language", value: language)]
+        return requestProducer.produceRequest(url: url, method: .get, key: apiKey, queryItems: queryItems)
     }
     
     func createSimilar(movieId: Int) -> URLRequest? {

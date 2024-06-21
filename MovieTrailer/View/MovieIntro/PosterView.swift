@@ -13,7 +13,7 @@ struct PosterView: View {
     
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 10) {
+            LazyHStack(spacing: 10) {
                 ForEach(0..<posters.count, id: \.self) { index in
                     PosterItemView(imageURL: posters[index].filePathURL, title: nil)
                         .frame(width: 150, height: 225)
@@ -26,13 +26,15 @@ struct PosterView: View {
 }
 
 #Preview {
-    PosterView(posters: [Poster(aspectRatio: 0.667, height: 3000, iso6391: "en",
-                                filePath: "/vpnVM9B6NMmQpWeZvzLvDESb2QY.jpg",
-                                voteAverage: 5.456, voteCount: 11, width: 2000),
-                         Poster(aspectRatio: 0.667, height: 3000, iso6391: "en",
-                                filePath: "/vpnVM9B6NMmQpWeZvzLvDESb2QY.jpg",
-                                voteAverage: 5.456, voteCount: 11, width: 2000),
-                         Poster(aspectRatio: 0.667, height: 3000, iso6391: "en",
-                                filePath: "/vpnVM9B6NMmQpWeZvzLvDESb2QY.jpg",
-                                voteAverage: 5.456, voteCount: 11, width: 2000)])
+    PosterView(posters: [
+        Poster(aspectRatio: 0.667, height: 3000, iso6391: "en",
+               filePath: "/vpnVM9B6NMmQpWeZvzLvDESb2QY.jpg",
+               voteAverage: 5.576, voteCount: 13, width: 2000),
+        Poster(aspectRatio: 0.667, height: 3000, iso6391: "en",
+               filePath: "/oxxqiyWrnM0XPnBtVe9TgYWnPxT.jpg",
+               voteAverage: 5.388, voteCount: 4, width: 2000),
+        Poster(aspectRatio: 0.667, height: 1500, iso6391: "en",
+               filePath: "/s4NDY8D2aJ1NiGwZZVco2rZo7ys.jpg",
+               voteAverage: 5.384, voteCount: 2, width: 1000)
+    ])
 }

@@ -24,18 +24,24 @@ struct SimilarView: View {
                                        alignment: .center)
                         }
                         
-                        VStack(alignment: .leading) {
-                            WebImage(url: movie.posterURL)
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .padding([.top, .leading, .trailing], 5)
-                            
-                            Text(movie.title)
-                                .font(.system(size: 12))
-                                .lineLimit(2)
-                                .bold()
-                                .padding(.all, 5)
+                        NavigationLink {
+                            MovieIntroContentView(movieId: movie.id, title: movie.title)
+                        } label: {
+                            VStack(alignment: .leading) {
+                                WebImage(url: movie.posterURL)
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .padding([.top, .leading, .trailing], 5)
+                                
+                                Text(movie.title)
+                                    .font(.system(size: 12))
+                                    .lineLimit(2)
+                                    .bold()
+                                    .padding(.all, 5)
+                            }
                         }
+                        .buttonStyle(.plain)
+                        
                     }
                 }
             }
