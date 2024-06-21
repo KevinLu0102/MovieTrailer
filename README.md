@@ -57,7 +57,7 @@ Hi！想知道最近熱門的電影有哪些嗎？還是即將上映的電影呢
   
 - Model  
   Movie:
-  共同資料型別
+  共同資料型別  
   XXXResponse:
   即將上映、熱門電影、電影資訊、影片、圖片、相關電影資料型別  
   
@@ -103,7 +103,7 @@ Hi！想知道最近熱門的電影有哪些嗎？還是即將上映的電影呢
 - YouTubeiOSPlayerHelper:   
   方便在 iOS 應用程式中嵌入和播放 YouTube 影片的 Framework，省去與 WKWebView 溝通，直接帶入影片 ID 就可以播放、暫停、快轉等等相關設定
 
-- 重複使用 PosterItemView:
+- 重複使用 PosterItemView:  
   熱門電影與電影介紹頁的Poster，使用相同的 View ，省去不必要的資源浪費以及實作畫面的時間
 
 **為了提高使用者體驗，進行了以下內容**
