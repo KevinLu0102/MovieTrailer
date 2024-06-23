@@ -45,6 +45,7 @@ struct popularityInfoView: View {
                                 }
                                 .font(.subheadline)
                             }
+                            .foregroundColor(.black)
                             .padding()
                         }
                     }
