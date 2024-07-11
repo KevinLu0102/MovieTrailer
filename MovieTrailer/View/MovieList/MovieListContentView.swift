@@ -12,34 +12,25 @@ struct MovieListContentView: View {
     
     var body: some View {
         NavigationView {
-            
-            ScrollView {
+            List {
                 if viewModel.isLoading {
                     ProgressView()
                 }
-                    
-                VStack(alignment: .leading, spacing: 0) {
-                    if let popularMovies = viewModel.popularMovies{
-                        Text("Popular")
-                            .font(.largeTitle)
-                            .bold()
-                            .padding(.horizontal)
-                        
+                
+                Section(header: Text("Popular").font(.largeTitle).bold()) {
+                    if let popularMovies = viewModel.popularMovies {
                         PopularView(popularMovies: popularMovies)
-                    }
-                    
-                    if let upcomingMovies = viewModel.upcomingMovies{
-                        VStack(alignment: .leading, spacing: 0) {
-                            Text("Upcoming")
-                                .font(.largeTitle)
-                                .bold()
-                                .padding(.horizontal)
-                                
-                            UpcomingView(upcomingMovies: upcomingMovies)
-                        }
-
+                            .frame(width: 350, height: 350)
                     }
                 }
+                .headerProminence(.increased)
+                
+                Section(header: Text("Upcoming").font(.largeTitle).bold()) {
+                    if let upcomingMovies = viewModel.upcomingMovies {
+                        UpcomingView(upcomingMovies: upcomingMovies)
+                    }
+                }
+                .headerProminence(.increased)
             }
             .onAppear {
                 viewModel.fetchMovieList()

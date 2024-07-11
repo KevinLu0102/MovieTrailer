@@ -11,21 +11,22 @@ struct PopularView: View {
     let popularMovies: [Movie]
     
     var body: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 0) {
-                ForEach(popularMovies.prefix(10)) { movie in
-                    NavigationLink {
-                        MovieIntroContentView(movieId: movie.id, title: movie.title)
-                    } label: {
-                        PosterItemView(imageURL: movie.posterURL, title: movie.title)
-                            .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height / 3)
+        GeometryReader { geo in
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: .zero) {
+                    ForEach(popularMovies.prefix(10)) { movie in
+                        NavigationLink {
+                            MovieIntroContentView(movieId: movie.id, title: movie.title)
+                        } label: {
+                            PosterItemView(imageURL: movie.posterURL, title: movie.title)
+                                .frame(width: geo.size.width, height: geo.size.height)
+                        }
+                        .buttonStyle(.plain)
                     }
-                    .buttonStyle(.plain)
                 }
             }
+            .scrollTargetBehavior(.paging)
         }
-        .padding(.vertical)
-        .scrollTargetBehavior(.paging)
     }
 }
 

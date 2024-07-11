@@ -18,10 +18,6 @@ struct UpcomingView: View {
                 MovieItemView(movie: movie)
             }
             .buttonStyle(.plain)
-            .padding()
-            
-            Divider()
-                .padding(.horizontal, 10)
         }
     }
 }
