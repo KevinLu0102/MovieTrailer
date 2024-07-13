@@ -23,15 +23,20 @@ struct MovieListContentView: View {
                             .frame(width: 350, height: 350)
                     }
                 }
-                .headerProminence(.increased)
                 
                 Section(header: Text("Upcoming").font(.largeTitle).bold()) {
                     if let upcomingMovies = viewModel.upcomingMovies {
                         UpcomingView(upcomingMovies: upcomingMovies)
                     }
                 }
-                .headerProminence(.increased)
+                
+                Section(header: Text("Top Rated").font(.largeTitle).bold()) {
+                    if let topRatedMovies = viewModel.topRatedMovies {
+                        TopRatedView(topRatedMovies: topRatedMovies )
+                    }
+                }
             }
+            .headerProminence(.increased)
             .onAppear {
                 viewModel.fetchMovieList()
             }

@@ -11,6 +11,7 @@ import Combine
 class MovieListViewModel: ObservableObject {
     @Published var popularMovies: [Movie]?
     @Published var upcomingMovies: [Movie]?
+    @Published var topRatedMovies: [Movie]?
     @Published var isLoading: Bool = false
     
     private let networkService: NetworkProtocol
@@ -44,19 +45,32 @@ class MovieListViewModel: ObservableObject {
             .eraseToAnyPublisher()
     }
     
+    private func fetchTopRatedMovies() -> AnyPublisher<TopRatedResponse?, Never> {
+        let request = movieRequest.createTopRated()
+        return networkService.fetch(with: request)
+            .map { $0 }
+            .catch { error -> Just<TopRatedResponse?> in
+                print("Error fetching top rated: \(error.localizedDescription)")
+                return Just(nil)
+            }
+            .eraseToAnyPublisher()
+    }
+    
     func fetchMovieList() {
         isLoading = true
         
-        Publishers.CombineLatest(
+        Publishers.CombineLatest3(
             fetchPopularMovies(),
-            fetchUpcomingMovies()
+            fetchUpcomingMovies(),
+            fetchTopRatedMovies()
         )
         .receive(on: DispatchQueue.main)
         .sink(receiveCompletion: { [weak self] _ in
             self?.isLoading = false
-        }, receiveValue: { [weak self] (popularResponse, upcomingResponse)  in
+        }, receiveValue: { [weak self] (popularResponse, upcomingResponse, topRatedResponse)  in
             self?.popularMovies = popularResponse?.results
             self?.upcomingMovies = upcomingResponse?.results
+            self?.topRatedMovies = topRatedResponse?.results
         })
         .store(in: &cancellables)
     }

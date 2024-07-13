@@ -9,6 +9,7 @@ import Foundation
 
 protocol MovieRequestProtocol {
     func createUpcoming() -> URLRequest?
+    func createTopRated() -> URLRequest?
     func createDetail(movieId: Int) -> URLRequest?
     func createVideo(movieId: Int) -> URLRequest?
     func createImages(movieId: Int) -> URLRequest?
@@ -34,6 +35,11 @@ class MovieRequestFactory: MovieRequestProtocol {
     
     func createUpcoming() -> URLRequest? {
         let url = "\(baseURL)/upcoming"
+        return requestProducer.produceRequest(url: url, method: .get, key: apiKey, queryItems: nil)
+    }
+    
+    func createTopRated() -> URLRequest? {
+        let url = "\(baseURL)/top_rated"
         return requestProducer.produceRequest(url: url, method: .get, key: apiKey, queryItems: nil)
     }
     
