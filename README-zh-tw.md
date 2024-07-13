@@ -12,29 +12,29 @@ Hi！想知道最近熱門的電影有哪些嗎？還是即將上映的電影呢
 ## 主要功能
 
 **電影列表**：
-  - 熱門電影
-  - 即將上映
+- 熱門電影
+- 即將上映
 
 **電影介紹**：
-  - 播放官方預告
-  - 電影簡介
-  - 受歡迎程度、上映日期、電影長度
-  - 電影海報觀賞
-  - 相關電影
+- 播放官方預告
+- 電影簡介
+- 受歡迎程度、上映日期、電影長度
+- 電影海報觀賞
+- 相關電影
 
 ## 開發框架
-  - SwiftUI
-  - Combine
+- SwiftUI
+- Combine
 
 ## 開發環境
-  - Xcode 15.2
-  - Swift 5.0
-  - iOS 17.0
-  - macOS 14.1
+- Xcode 15.2
+- Swift 5.0
+- iOS 17.0
+- macOS 14.1
 
 ## Package Dependencies
-  - [SDWebImageSwiftUI](https://github.com/SDWebImage/SDWebImageSwiftUI)
-  - [YouTube-Player-iOS-Helper](https://github.com/youtube/youtube-ios-player-helper)
+- [SDWebImageSwiftUI](https://github.com/SDWebImage/SDWebImageSwiftUI)
+- [YouTube-Player-iOS-Helper](https://github.com/youtube/youtube-ios-player-helper)
 
 ## 安裝應用程式
 
