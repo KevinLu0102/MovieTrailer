@@ -8,7 +8,7 @@
 import SwiftUI
 import SDWebImageSwiftUI
 
-struct MovieItemView: View {
+struct UpcomingItemView: View {
     let movie: Movie
 
     var body: some View {
@@ -37,7 +37,7 @@ struct MovieItemView: View {
     }
 }
 #Preview {
-    MovieItemView(movie: Movie(
+    UpcomingItemView(movie: Movie(
         id: 1022789,
         adult: false,
         backdropPath: "/uVu2fBc114un7F1GD76RBouWyBP.jpg",

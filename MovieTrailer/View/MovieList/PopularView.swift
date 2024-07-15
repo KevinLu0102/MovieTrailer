@@ -10,23 +10,33 @@ import SwiftUI
 struct PopularView: View {
     let popularMovies: [Movie]
     
+    init(popularMovies: [Movie]) {
+        UIPageControl.appearance().currentPageIndicatorTintColor = .lightGray
+        UIPageControl.appearance().pageIndicatorTintColor = UIColor.gray.withAlphaComponent(0.1)
+        self.popularMovies = popularMovies
+    }
+    
     var body: some View {
         GeometryReader { geo in
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: .zero) {
-                    ForEach(popularMovies.prefix(10)) { movie in
-                        NavigationLink {
-                            MovieIntroContentView(movieId: movie.id, title: movie.title)
-                        } label: {
+            TabView {
+                ForEach(popularMovies) { movie in
+                    NavigationLink {
+                        MovieIntroContentView(movieId: movie.id, title: movie.title)
+                    } label: {
+                        VStack() {
                             PosterItemView(imageURL: movie.posterURL, title: movie.title)
-                                .frame(width: geo.size.width, height: geo.size.height)
+                                .frame(width: geo.size.width, height: geo.size.height - 70)
+                                .padding(.top, 20)
+                            Spacer()
                         }
-                        .buttonStyle(.plain)
                     }
+                    .buttonStyle(.plain)
                 }
             }
-            .scrollTargetBehavior(.paging)
+            .tabViewStyle(.page)
+            
         }
+        .frame(height: 400)
     }
 }
 

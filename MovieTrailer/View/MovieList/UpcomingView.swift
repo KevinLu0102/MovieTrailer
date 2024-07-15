@@ -12,12 +12,11 @@ struct UpcomingView: View {
     
     var body: some View {
         ForEach(upcomingMovies) { movie in
-            NavigationLink {
-                MovieIntroContentView(movieId: movie.id, title: movie.title)
-            } label: {
-                MovieItemView(movie: movie)
-            }
-            .buttonStyle(.plain)
+            UpcomingItemView(movie: movie)
+                .background(
+                    NavigationLink("", destination: MovieIntroContentView(movieId: movie.id, title: movie.title))
+                        .opacity(0)
+                )
         }
     }
 }

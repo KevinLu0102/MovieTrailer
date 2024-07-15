@@ -20,7 +20,7 @@ struct MovieListContentView: View {
                 Section(header: Text("Popular").font(.largeTitle).bold()) {
                     if let popularMovies = viewModel.popularMovies {
                         PopularView(popularMovies: popularMovies)
-                            .frame(width: 350, height: 350)
+                            .listRowInsets(.init())
                     }
                 }
                 
@@ -33,6 +33,8 @@ struct MovieListContentView: View {
                 Section(header: Text("Top Rated").font(.largeTitle).bold()) {
                     if let topRatedMovies = viewModel.topRatedMovies {
                         TopRatedView(topRatedMovies: topRatedMovies )
+                            .listRowInsets(.init())
+                            .padding(.vertical)
                     }
                 }
             }

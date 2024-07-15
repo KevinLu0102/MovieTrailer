@@ -6,18 +6,33 @@
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct TopRatedView: View {
     let topRatedMovies: [Movie]
+    let rows = [GridItem(.flexible(), spacing: 20),
+                GridItem(.flexible(), spacing: 20),
+                GridItem(.flexible(), spacing: 20)]
     
     var body: some View {
-        ForEach(topRatedMovies) { movie in
-            NavigationLink {
-                MovieIntroContentView(movieId: movie.id, title: movie.title)
-            } label: {
-                MovieItemView(movie: movie)
+        ScrollView(.horizontal) {
+            LazyHGrid(rows: rows, spacing: .zero) {
+                ForEach(topRatedMovies) { movie in
+                    NavigationLink {
+                        MovieIntroContentView(movieId: movie.id, title: movie.title)
+                    } label: {
+                        TopRatedItemView(movie: movie)
+                    }
+                    .buttonStyle(.plain)
+                }
             }
-            .buttonStyle(.plain)
+            .scrollTargetLayout()
         }
+        .scrollTargetBehavior(.viewAligned)
+        .scrollIndicators(.hidden)
     }
+}
+
+#Preview {
+    TopRatedView(topRatedMovies: PreviewData.movies)
 }
