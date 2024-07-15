@@ -2,10 +2,11 @@
 
 ## Overview
 
-Hi! Want to know what the latest popular movies are? Or the upcoming releases? This is an App designed for movie lovers! 🍿🎬
+Hi! Want to know what the latest popular moviw are, or the upcoming releases? This is an app designed for movie lovers! 🍿🎬
 
-I used [TMDB](https://developer.themoviedb.org/docs/getting-started) to obtain movie-related information. It's like a movie encyclopedia, with incredibly rich data, providing you with the most popular and upcoming movie information anytime, anywhere.
-Click on each movie to see detailed movie introductions. The related movies feature will recommend similar exciting films, ensuring you know everything about the movie. Want a sneak peek? We can even play official trailers! Experience the charm of blockbusters while lying on your couch. Isn't that cool? Not only is the information rich, but the interface is also designed to be simple and practical.
+I used [TMDB](https://developer.themoviedb.org/docs/getting-started) to obtain movie-related information.
+
+MovieTrailer is the one-stop destination for quick and relevant insight on the latest films, including ratings, synopsis, posters, trailers and release dates. The interface is designed to be simple, practical and easy to use.
 
 So, why not download and try it out?
 
@@ -16,10 +17,10 @@ So, why not download and try it out?
 - Upcoming Releases
 
 **Movie Introduction**:
-- Play Official Trailer
-- Movie Synopsis
-- Popularity, Release Date, Movie Duration
-- Movie Poster Viewing
+- Official Trailer
+- Synopsis
+- Popularity, Release Date and Movie Duration
+- Poster 
 - Related Movies
 
 ## Development Framework
@@ -42,12 +43,11 @@ So, why not download and try it out?
 
 To use MovieTrailer, follow these steps:
 
-Open Xcode, select Integrate -> Clone from the top menu -> Paste the project URL
-From the top menu, select Product -> Run to run the application on the simulator or connected iOS device
+Open Xcode, select Integrate -> Clone from the top menu -> Paste the project URL from the top menu, select Product -> Run to run the application on the simulator or connected iOS device
 
 ## Project Architecture
 
-This project uses the MVVM architecture, separating data models, business logic, and UI into different layers. The following explains the project folder categories, which can be directly compared with the project structure:
+This project uses the MVVM architecture, separating data models, business logic, and UI into different layers. The following explains the project structure:
 
 - ViewModel  
   MovieListViewModel:    
