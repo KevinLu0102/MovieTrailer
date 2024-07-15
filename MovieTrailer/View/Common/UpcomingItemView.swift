@@ -14,15 +14,22 @@ struct UpcomingItemView: View {
     var body: some View {
         HStack(alignment: .center) {
             if let backdropURL = movie.backdropURL {
-                WebImage(url: backdropURL) { image in
-                    image.resizable()
-                } placeholder: {
-                    Rectangle().foregroundColor(.white)
+                VStack(alignment: .trailing) {
+                    WebImage(url: backdropURL) { image in
+                        image.resizable()
+                    } placeholder: {
+                        Rectangle().foregroundColor(.white)
+                    }
+                    .indicator(.activity)
+                    .transition(.fade(duration: 0.5))
+                    .frame(width: 120, height: 80, alignment: .center)
+                    .cornerRadius(8)
+                    
+                    Text(movie.releaseDate.toMonth())
+                        .font(.caption2)
+                        .italic()
+                        .foregroundColor(.gray.opacity(0.5))
                 }
-                .indicator(.activity)
-                .transition(.fade(duration: 0.5))
-                .frame(width: 120, height: 80, alignment: .center)
-                .cornerRadius(8)
             }
 
             VStack(alignment: .leading, spacing: 8) {
