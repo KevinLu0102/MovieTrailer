@@ -19,9 +19,9 @@ class MovieIntroViewModel: ObservableObject {
     private let apiRequest: MovieRequestProtocol
     private var cancellables = Set<AnyCancellable>()
     
-    init(networkService: NetworkProtocol, apiRequest: MovieRequestProtocol) {
+    init(networkService: NetworkProtocol, movieRequest: MovieRequestProtocol) {
         self.networkService = networkService
-        self.apiRequest = apiRequest
+        self.apiRequest = movieRequest
     }
     
     private func fetchDetail(movieId: Int) -> AnyPublisher<DetailResponse?, Never> {

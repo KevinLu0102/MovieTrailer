@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MovieIntroContentView: View {
-    @StateObject private var viewModel = MovieIntroViewModel(networkService: NetworkService.shared, apiRequest: MovieRequestFactory())
+    @StateObject private var viewModel = MovieIntroViewModel(networkService: NetworkService.shared, movieRequest: MovieRequestFactory())
     @State private var showInfoView = false
     let movieId: Int
     let title: String
