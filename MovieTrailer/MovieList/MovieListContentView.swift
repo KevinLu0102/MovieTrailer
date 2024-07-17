@@ -24,9 +24,6 @@ struct MovieListContentView: View {
                             .foregroundColor(.gray)
                     }
                 }
-                .onAppear {
-                    viewModel.fetchPopularMovies()
-                }
                 
                 Section(header: Text("Upcoming").font(.largeTitle).bold()) {
                     if viewModel.isLoadingUpcoming {
@@ -37,9 +34,6 @@ struct MovieListContentView: View {
                         Text("Data Fetch Failed")
                             .foregroundColor(.gray)
                     }
-                }
-                .onAppear {
-                    viewModel.fetchUpcomingMovies()
                 }
                 
                 Section(header: Text("Top Rated").font(.largeTitle).bold()) {
@@ -54,12 +48,14 @@ struct MovieListContentView: View {
                             .foregroundColor(.gray)
                     }
                 }
-                .onAppear {
-                    viewModel.fetchTopRatedMovies()
-                }
             }
             .headerProminence(.increased)
         }
+        .onAppear(perform: {
+            viewModel.fetchPopularMovies()
+            viewModel.fetchUpcomingMovies()
+            viewModel.fetchTopRatedMovies()
+        })
     }
 }
 
