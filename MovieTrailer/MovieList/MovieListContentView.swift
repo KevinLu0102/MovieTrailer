@@ -17,7 +17,7 @@ struct MovieListContentView: View {
                     if viewModel.isLoadingPopular {
                         ProgressView()
                     } else if let popularMovies = viewModel.popularMovies {
-                        PopularView(popularMovies: popularMovies)
+                        PopularView(popularMovies: Array(popularMovies.prefix(10)))
                             .listRowInsets(.init())
                     } else {
                         Text("Data Fetch Failed")

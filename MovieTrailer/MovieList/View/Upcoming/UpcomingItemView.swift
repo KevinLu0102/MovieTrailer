@@ -25,7 +25,7 @@ struct UpcomingItemView: View {
                     .frame(width: 120, height: 80, alignment: .center)
                     .cornerRadius(8)
                     
-                    Text(movie.releaseDate.toMonth())
+                    Text(movie.releaseDate.toMonthAndDay())
                         .font(.caption2)
                         .italic()
                         .foregroundColor(.gray.opacity(0.5))

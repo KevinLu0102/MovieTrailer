@@ -8,13 +8,13 @@
 import Foundation
 
 extension String{
-    func toMonth() -> String {
+    func toMonthAndDay() -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
             
         guard let date = dateFormatter.date(from: self) else { return self }
             
-        dateFormatter.dateFormat = "MMMM"
+        dateFormatter.dateFormat = "MMMM d"
         return dateFormatter.string(from: date)
     }
 }
