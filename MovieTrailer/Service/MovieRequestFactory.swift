@@ -20,40 +20,41 @@ protocol MovieRequestProtocol {
 class MovieRequestFactory: MovieRequestProtocol {
     private let baseURL: String
     private let apiKey: String
-    private let userInfo: UserSystemInfoProtocol
+    private let language: String?
+    private let iso3166: String?
+    private let iso639: String?
     private let requestProducer: RequestProducerProtocol
     
-    init(baseURL: String = "https://api.themoviedb.org/3/movie",
-         apiKey: String = "aefd8f383ce4794e8c98eb8132c161ca",
-         userInfo: UserSystemInfoProtocol = UserInfo.shared,
-         requestProducer: RequestProducerProtocol = RequestProducer()) {
-        self.baseURL = baseURL
-        self.apiKey = apiKey
-        self.userInfo = userInfo
+    init(apiConfig: APICongigProtocol, languageRegion: LanguageRegionProtocol, requestProducer: RequestProducerProtocol) {
+        self.baseURL = apiConfig.baseURL
+        self.apiKey = apiConfig.apiKey
+        self.language = languageRegion.language
+        self.iso3166 = languageRegion.iso3166
+        self.iso639 = languageRegion.iso639
         self.requestProducer = requestProducer
     }
     
     func createPopular() -> URLRequest? {
         let url = "\(baseURL)/popular"
-        let queryItems = [URLQueryItem(name: "language", value: userInfo.language), URLQueryItem(name: "region", value: userInfo.iso3166)]
+        let queryItems = [URLQueryItem(name: "language", value: language), URLQueryItem(name: "region", value: iso3166)]
         return requestProducer.produceRequest(url: url, method: .get, key: apiKey, queryItems: queryItems)
     }
     
     func createUpcoming() -> URLRequest? {
         let url = "\(baseURL)/upcoming"
-        let queryItems = [URLQueryItem(name: "language", value: userInfo.language), URLQueryItem(name: "region", value: userInfo.iso3166)]
+        let queryItems = [URLQueryItem(name: "language", value: language), URLQueryItem(name: "region", value: iso3166)]
         return requestProducer.produceRequest(url: url, method: .get, key: apiKey, queryItems: queryItems)
     }
     
     func createTopRated() -> URLRequest? {
         let url = "\(baseURL)/top_rated"
-        let queryItems = [URLQueryItem(name: "language", value: userInfo.language), URLQueryItem(name: "region", value: userInfo.iso3166)]
+        let queryItems = [URLQueryItem(name: "language", value: language), URLQueryItem(name: "region", value: iso3166)]
         return requestProducer.produceRequest(url: url, method: .get, key: apiKey, queryItems: queryItems)
     }
     
     func createDetail(movieId: Int) -> URLRequest? {
         let url = "\(baseURL)/\(movieId)"
-        let queryItems = [URLQueryItem(name: "language", value: userInfo.language)]
+        let queryItems = [URLQueryItem(name: "language", value: language)]
         return requestProducer.produceRequest(url: url, method: .get, key: apiKey, queryItems: queryItems)
     }
     
@@ -64,13 +65,13 @@ class MovieRequestFactory: MovieRequestProtocol {
     
     func createImages(movieId: Int) -> URLRequest? {
         let url = "\(baseURL)/\(movieId)/images"
-        let queryItems = [URLQueryItem(name: "include_image_language", value: userInfo.iso639)]
+        let queryItems = [URLQueryItem(name: "include_image_language", value: iso639)]
         return requestProducer.produceRequest(url: url, method: .get, key: apiKey, queryItems: queryItems)
     }
     
     func createSimilar(movieId: Int) -> URLRequest? {
         let url = "\(baseURL)/\(movieId)/similar"
-        let queryItems = [URLQueryItem(name: "language", value: userInfo.language)]
+        let queryItems = [URLQueryItem(name: "language", value: language)]
         return requestProducer.produceRequest(url: url, method: .get, key: apiKey, queryItems: queryItems)
     }
 }
