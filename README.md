@@ -12,6 +12,9 @@ So, why not download and try it out?
 
 For the Traditional Chinese version of the README, please see [README-zh-TW.md](README-zh-tw.md).
 
+<img src="https://github.com/user-attachments/assets/63fe5b77-2f8a-4bee-9498-c17ff9c05a45" width="300">
+<img src="https://github.com/user-attachments/assets/e498cbb2-ef89-40b7-9c4c-c340b0f3fba0" width="300">
+
 ## Main Features
 
 **Movie List**:
