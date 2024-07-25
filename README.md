@@ -1,4 +1,4 @@
-# MovieTrailer iOS App
+# Rolling iOS App
 
 ## Overview
 
@@ -6,7 +6,7 @@ Hi! Want to know what the latest popular moviw are, or the upcoming releases? Th
 
 I used [TMDB](https://developer.themoviedb.org/docs/getting-started) to obtain movie-related information.
 
-MovieTrailer is the one-stop destination for quick and relevant insight on the latest films, including ratings, synopsis, posters, trailers and release dates. The interface is designed to be simple, practical and easy to use.
+Rolling is the one-stop destination for quick and relevant insight on the latest films, including ratings, synopsis, posters, trailers and release dates. The interface is designed to be simple, practical and easy to use.
 
 So, why not download and try it out?
 
@@ -41,7 +41,7 @@ So, why not download and try it out?
 
 ## Installing the Application
 
-To use MovieTrailer, follow these steps:
+To use Rolling, follow these steps:
 
 Open Xcode, select Integrate -> Clone from the top menu -> Paste the project URL from the top menu, select Product -> Run to run the application on the simulator or connected iOS device
 
