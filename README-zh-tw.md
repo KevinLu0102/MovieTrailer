@@ -1,4 +1,4 @@
-# MovieTrailer iOS App
+# Rolling iOS App
 
 ## 概述
 
@@ -38,7 +38,7 @@ Hi！想知道最近熱門的電影有哪些嗎？還是即將上映的電影呢
 
 ## 安裝應用程式
 
-使用 MovieTrailer ，請按照以下步驟操作
+使用 Rolling ，請按照以下步驟操作
 
 1. 開啟Xcode，選擇上方選單 Integrate -> Clone -> 貼上專案URL  
 2. 上方選單 Product -> Run，即可在模擬器或連接的 iOS 設備上運行應用程式
