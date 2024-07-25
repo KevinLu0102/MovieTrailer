@@ -10,6 +10,8 @@ Rolling is the one-stop destination for quick and relevant insight on the latest
 
 So, why not download and try it out?
 
+For the Traditional Chinese version of the README, please see [README-zh-TW.md](https://github.com/KevinLu0102/Rolling/blob/main/README-zh-tw.md).
+
 ## Main Features
 
 **Movie List**:
